@@ -1,159 +1,29 @@
 #include <iostream>
-
-using namespace std;
-
-class kolejka {
-private:
-
-    int id_pierwszy=0;
-    int l_el=0;
-    int max_l_el;
-
-public:
-
-    float * element;
+#include "kolejka.h"
+#include "kolejka.cpp"
 
 
-    kolejka(int max_rozmiar)
+void menu(kolejka &x,kolejka &y)
+{
+    int wybor=0;
+    float liczba;
+    char kolejka;
+    cout << "WYBIERZ:" << endl << "1. Wstaw element do kolejki x (z nadpisaniem przy przekroczeniu rozmiaru)" << endl;
+    cout << "2. Wstaw element do kolejki y (z brakiem mozliwosci wstawienia przy przekroczeniu rozmiaru)" << endl;
+    cout << "3. Pobierz pierwszy element z kolejki" << endl;
+    cout << "4. Podaj aktualny rozmiar kolejki" << endl;
+    cout << "5. Sprawdz, czy kolejka jest pelna" << endl;
+    cout << "6. Sprawdz, czy kolejka jest pusta" << endl;
+    cout << "7. Utworz nowa kolejke, dodajac kolejki x i y" << endl;
+    cout << "8. Dodaj kolejke y do kolejki x" << endl;
+    cout << "9. Porownaj, czy kolejki sa takie same" << endl;
+    cout << "10. Porownaj, czy kolejki sa rozne" << endl;
+    cout << "11. Wydrukuj kolejke" << endl;
+    cout << "12. Zakoncz dzialanie programu" << endl;
+
+    while(wybor!=12)
     {
-        element= new float[max_rozmiar];
-        max_l_el=max_rozmiar;
-    }
-
-    int podaj_rozmiar (void);
-    float pobierz (void);
-    int czy_pusta (void);
-    int czy_pelna (void);
-    void dodaj_nadpisz (float);
-    void dodaj_bez_nadpisu (float);
-
-    kolejka operator+(kolejka&);
-    void operator+=(kolejka&);
-    bool operator==(kolejka&);
-    bool operator!=(kolejka&);
-    friend ostream& operator<<(ostream&, kolejka&);
-
-
-
-};
-
-
-    ostream& operator<< (ostream &wyjscie, kolejka &x)
-    {
-        for (int i=0; i<x.l_el; i++)
-        {
-            wyjscie << x.element[(x.id_pierwszy+i)%x.max_l_el] << " ";
-        }
-         wyjscie << endl;
-        return wyjscie;
-    }
-
-
-    kolejka kolejka::operator+(kolejka &kol2)
-    {
-        class kolejka nowa_kolejka(max_l_el+kol2.max_l_el);
-        for(int i=0; i<l_el; i++) nowa_kolejka.dodaj_nadpisz(element[(id_pierwszy+i)%max_l_el]);
-        for(int i=0; i<kol2.l_el; i++) nowa_kolejka.dodaj_nadpisz(kol2.element[(kol2.id_pierwszy+i)%kol2.max_l_el]);
-        return nowa_kolejka;
-    }
-
-    bool kolejka::operator==(kolejka &kol2)
-    {
-        if(l_el!=kol2.l_el) return false;
-        for (int i=0; i<l_el; i++)
-        {
-            if(element[i]!=kol2.element[i]) return false;
-        }
-        return true;
-    }
-
-    bool kolejka::operator!=(kolejka& kol2)
-    {
-        return !(operator==(kol2));
-    }
-
-    void kolejka::operator+=(kolejka &kol2)
-    {
-
-        int tmp_l_el=l_el;
-        float tmp[l_el];
-        for(int i=0; i<l_el; i++) tmp[i]=element[(id_pierwszy+i)%max_l_el];
-
-        element= new float[max_l_el+kol2.max_l_el];
-        max_l_el+=kol2.max_l_el;
-        l_el=0;
-
-        for(int i=0; i<tmp_l_el; i++) dodaj_bez_nadpisu(tmp[i]);
-        for(int i=0; i<kol2.l_el; i++) dodaj_bez_nadpisu(kol2.element[(kol2.id_pierwszy+i)%kol2.max_l_el]);
-
-    }
-
-
-
-    int kolejka::podaj_rozmiar (void)
-    {
-        return l_el;
-    }
-
-    int kolejka::czy_pusta (void)
-    {
-        return l_el==0;
-    }
-
-    int kolejka::czy_pelna (void)
-    {
-        return l_el==max_l_el;
-    }
-
-
-    void kolejka::dodaj_nadpisz (float nowy_el)
-    {
-        element[(id_pierwszy+l_el)%max_l_el]=nowy_el;
-        if(!czy_pelna()) l_el++;
-        else id_pierwszy=(id_pierwszy+1)%max_l_el;
-    }
-
-    void kolejka::dodaj_bez_nadpisu (float nowy_el)
-    {
-        if(!czy_pelna())
-        {
-            element[(id_pierwszy+l_el)%max_l_el]=nowy_el;
-            l_el++;
-        }
-        else cout << "Brak mozliwosci dodania kolejnego elementu"<<endl;
-    }
-
-
-
-    float kolejka::pobierz (void)
-    {
-        float pobrany_element;
-        pobrany_element=element[id_pierwszy];
-        id_pierwszy=(id_pierwszy+1)%max_l_el;
-        l_el--;
-        return pobrany_element;
-    }
-
-
-void menu(kolejka &x,kolejka &y){
-
-int wybor=0;
-float liczba;
-char kolejka;
-cout << "WYBIERZ:" << endl << "1. Wstaw element do kolejki x (z nadpisaniem przy przekroczeniu rozmiaru)" << endl;
-cout << "2. Wstaw element do kolejki y (z brakiem mozliwosci wstawienia przy przekroczeniu rozmiaru)" << endl;
-cout << "3. Pobierz pierwszy element z kolejki" << endl;
-cout << "4. Podaj aktualny rozmiar kolejki" << endl;
-cout << "5. Sprawdz, czy kolejka jest pelna" << endl;
-cout << "6. Sprawdz, czy kolejka jest pusta" << endl;
-cout << "7. Utworz nowa kolejke, dodajac kolejki x i y" << endl;
-cout << "8. Dodaj kolejke y do kolejki x" << endl;
-cout << "9. Porownaj, czy kolejki sa takie same" << endl;
-cout << "10. Porownaj, czy kolejki sa rozne" << endl;
-cout << "11. Wydrukuj kolejke" << endl;
-
-    while(wybor!=10)
-    {
+        cout << "PODAJ WYBOR: ";
         cin >> wybor;
         switch (wybor)
         {
@@ -176,10 +46,10 @@ cout << "11. Wydrukuj kolejke" << endl;
             case 3: {
                 cout << "Wybierz kolejke (x, y): ";
                 cin >> kolejka;
-                cout << "Pobrana liczba to: ";
-                if(kolejka=='x') cout << x.pobierz();
-                else if(kolejka=='y') cout << y.pobierz();
-                else cout << "Taka kolejka nie istnieje.";
+                if(kolejka=='x' && !x.czy_pusta()) cout << "Pobrana liczba to: " << x.pobierz() << endl; //jezeli wybrano kolejke x i nie jest ona pusta
+                else if(kolejka=='y' && !y.czy_pusta()) cout << "Pobrana liczba to: " << y.pobierz() << endl; //jezeli wybrano y i nie jest ona pusta
+                else if(kolejka=='x' || kolejka=='y') cout << "Kolejka jest pusta." << endl;
+                else cout << "Taka kolejka nie istnieje." << endl;
                 break;
                 }
 
@@ -189,12 +59,70 @@ cout << "11. Wydrukuj kolejke" << endl;
                 }
 
             case 5:  {
+                cout << "Kolejka x ";
+                if (x.czy_pelna()) cout << "jest pelna" << endl;
+                else cout << "nie jest pelna" << endl;
 
+                cout << "Kolejka y ";
+                if (y.czy_pelna()) cout << "jest pelna" << endl;
+                else cout << "nie jest pelna" << endl;
 
                 break;
-                }       //konczenie dzialania programu
+                }
 
-            default: cout << "Bledna liczba" << endl;                       //jesli podano dowolny inny znak
+            case 6:  {
+                cout << "Kolejka x ";
+                if (x.czy_pusta()) cout << "jest pusta" << endl;
+                else cout << "nie jest pusta" << endl;
+
+                cout << "Kolejka y ";
+                if (y.czy_pusta()) cout << "jest pusta" << endl;
+                else cout << "nie jest pusta" << endl;
+
+                break;
+                }
+
+            case 7: {
+                class kolejka z(0);
+                z=x+y;
+                cout << "Utworzono nowa kolejke: ";
+                cout << z; //wypisywanie nowoutworzonej kolejki
+
+                break;
+            }
+
+            case 8: {
+                x+=y;
+                cout << "Dodano kolejke y do kolejki x, nowa kolejka x to: ";
+                cout << x;
+
+                break;
+            }
+
+            case 9: {
+                if (x==y) cout << "Kolejki x i y sa takie same." << endl;
+                else cout << "Kolejki x i y nie sa takie same." << endl;
+                break;
+            }
+
+            case 10: {
+                if (x!=y) cout << "Kolejki x i y sa rozne." << endl;
+                else cout << "Kolejki x i y nie sa rozne." << endl;
+                break;
+            }
+
+            case 11: {
+                cout << "Kolejka x: ";
+                cout << x;
+                cout << "Kolejka y: ";
+                cout << y;
+                break;
+
+            }
+
+            case 12: break;
+
+            default: cout << "Bledna liczba" << endl;      //jesli podano dowolny inny znak
         }
     }
 }
@@ -206,62 +134,10 @@ int main()
     int rozm_x, rozm_y;
     cout << "Podaj rozmiar kolejek x i y: ";
     cin >> rozm_x >> rozm_y;
-    class kolejka x(rozm_x);
-    class kolejka y(rozm_y);
+    kolejka x(rozm_x); //tworzenie kolejki x o podanym rozmiarze
+    kolejka y(rozm_y); //tworzenie kolejki y o podanym rozmiarze
 
-    menu(x, y);
-
-    y.dodaj_nadpisz(11);
-    y.dodaj_nadpisz(12);
-    y.dodaj_nadpisz(13);
-    y.dodaj_nadpisz(14);
-    y.dodaj_nadpisz(15);
-    y.dodaj_nadpisz(16);
-
-    if(x!=y) cout << "dupa" << endl;
-    else cout << "niedupa" << endl;
-
-    cout << x.pobierz() << endl << endl;
-
-    cout << "operator<<: ";
-    cout << x;
-
-
-
-
-
-    //cout << y.pobierz() << endl;
-    //cout << y.pobierz() << endl;
-
-
-
-    x+=y;
-
-    cout << "operator<<: ";
-    cout << x;
-
-   cout << x.pobierz() << endl << endl;
-   cout << x.pobierz() << endl << endl;
-
-   cout << "operator<<: ";
-    cout << x;
-
-   cout << x.pobierz() << endl << endl;
-   cout << x.pobierz() << endl << endl;
-   cout << x.pobierz() << endl << endl;
-   cout << x.pobierz() << endl << endl;
-
-   cout << "operator<<: ";
-    cout << x;
-
-   cout << x.pobierz() << endl << endl;
-   cout << x.pobierz() << endl << endl;
-
-   cout << "operator<<: ";
-    cout << x;
-
-
+    menu(x, y); //wywolanie menu
 
     return 0;
 }
-
