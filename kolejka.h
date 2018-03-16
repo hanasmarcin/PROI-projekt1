@@ -22,6 +22,11 @@ public:
         max_l_el=max_rozmiar;
     }
 
+    ~kolejka()
+    {
+        delete[] element;
+    }
+
     int podaj_rozmiar (void); //metoda zwracajaca rozmiar kolejki
     float pobierz (void); //metoda pobierajaca pierwszy element kolejki
     int czy_pusta (void); //metoda zwracajaca czy kolejka jest pusta
@@ -29,7 +34,7 @@ public:
     void dodaj_nadpisz (float); //metoda dodajaca element do kolejki z nadpisywaniem po przekroczeniu maksymalnego rozmiaru
     void dodaj_bez_nadpisu (float); //metoda dodajaca element do kolejki bez nadpisu po przekorczeniu maksymalnego rozmiaru
 
-    kolejka operator+(kolejka&); //metoda dodajaca do siebie dwie kolejki zwracajaca nowa kolejke
+    kolejka& operator+(kolejka&); //metoda dodajaca do siebie dwie kolejki zwracajaca nowa kolejke
     void operator+=(kolejka&); //metoda dodajaca do jednej kolejki druga
     bool operator==(kolejka&); //metoda porownujaca czy kolejki sa takie same
     bool operator!=(kolejka&); //metoda sprawdzajaca czy kolejki sa rozne
