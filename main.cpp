@@ -6,7 +6,6 @@
 void menu(kolejka &x,kolejka &y)
 {
     int wybor=0;
-    float liczba;
     char kolejka;
     cout << "WYBIERZ:" << endl << "1. Wstaw element do kolejki x (z nadpisaniem przy przekroczeniu rozmiaru)" << endl;
     cout << "2. Wstaw element do kolejki y (z brakiem mozliwosci wstawienia przy przekroczeniu rozmiaru)" << endl;

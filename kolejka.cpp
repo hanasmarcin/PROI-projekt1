@@ -56,11 +56,12 @@ int kolejka::czy_pelna (void)
     return l_el==max_l_el;
 }
 
-kolejka kolejka::operator+(kolejka &kol2)
+kolejka& kolejka::operator+(kolejka &kol2)
 {
-    class kolejka nowa_kolejka(max_l_el+kol2.max_l_el); //tworzenie nowej kolejki o rozmiarze sumy maksymalnych rozmiarow obu kolejek
+    static kolejka nowa_kolejka(max_l_el+kol2.max_l_el);
+     //tworzenie nowej kolejki o rozmiarze sumy maksymalnych rozmiarow obu kolejek
     for(int i=0; i<l_el; i++) nowa_kolejka.dodaj_nadpisz(element[id_i(i)]); //dodawanie do kolejki elementow z pierwszej kolejki
-    for(int i=0; i<kol2.l_el; i++) nowa_kolejka.dodaj_nadpisz(kol2.element[(kol2.id_i(i)]); //dodawanie do kolejki elementow z drugiej kolejki
+    for(int i=0; i<kol2.l_el; i++) nowa_kolejka.dodaj_nadpisz(kol2.element[kol2.id_i(i)]); //dodawanie do kolejki elementow z drugiej kolejki
     return nowa_kolejka;
 }
 
@@ -68,15 +69,17 @@ kolejka kolejka::operator+(kolejka &kol2)
 void kolejka::operator+=(kolejka &kol2)
 {
     int tmp_l_el=l_el;
-    float tmp[l_el];
+    float * tmp = new float [l_el];
     for(int i=0; i<l_el; i++) tmp[i]=element[id_i(i)]; //zapisywanie aktualny danych z kolejki x do tablicy tymczasowej
 
+    delete[] element;
     element= new float[max_l_el+kol2.max_l_el]; //tworzenie nowej tablicy dynamicznej o rozmiarze wiekszym o maksymalna wielkosc dodawanej kolejki
     max_l_el+=kol2.max_l_el;
     l_el=0; //zerowanie liczby elementow, utworzona tablica jest obecnie pusta
 
     for(int i=0; i<tmp_l_el; i++) dodaj_bez_nadpisu(tmp[i]); //dodawanie do kolejki elementow z tablicy tymczasowej (tych ktore wczesniej byly w tej kolejce)
-    for(int i=0; i<kol2.l_el; i++) dodaj_bez_nadpisu(kol2.element[(kol2.id_i(i)]); //dodawanie nowych elementow z kolejki dodawanej
+    delete[] tmp;
+    for(int i=0; i<kol2.l_el; i++) dodaj_bez_nadpisu(kol2.element[kol2.id_i(i)]); //dodawanie nowych elementow z kolejki dodawanej
 }
 
 bool kolejka::operator==(kolejka &kol2)
@@ -100,7 +103,7 @@ ostream& operator<< (ostream &wyjscie, kolejka &x)
 {
     for (int i=0; i<x.l_el; i++)
     {
-        wyjscie << x.element[(x.id_i(i)] << " "; //ladowanie do wyjscia elementow kolejki x
+        wyjscie << x.element[x.id_i(i)] << " "; //ladowanie do wyjscia elementow kolejki x
     }
     wyjscie << endl;
     return wyjscie; //zwracanie wyjscia
