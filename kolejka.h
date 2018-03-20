@@ -1,3 +1,8 @@
+/* Marcin Hanas
+ * plik naglowkowy klasy kolejki
+ */
+
+
 #ifndef KOLEJKA_H_INCLUDED
 #define KOLEJKA_H_INCLUDED
 
@@ -14,27 +19,18 @@ private:
     int id_i (int); //metoda pomocnicza zwracajaca id i-tego miejsca w kolejce (gdzie 0 to id pierwszego elementu)
 public:
 
-    kolejka(int max_rozmiar) //konstruktor kolejki
-    {
-        id_pierwszy=0;
-        l_el=0;
-        element= new float[max_rozmiar]; //tworzenie tablicy dynamicznej o zadanym rozmiarze kolejki
-        max_l_el=max_rozmiar;
-    }
-
-    ~kolejka()
-    {
-        delete[] element;
-    }
+    kolejka(int max_rozmiar); //konstruktor kolejki
+    ~kolejka(); //destruktor kolejki
 
     int podaj_rozmiar (void); //metoda zwracajaca rozmiar kolejki
     float pobierz (void); //metoda pobierajaca pierwszy element kolejki
-    int czy_pusta (void); //metoda zwracajaca czy kolejka jest pusta
-    int czy_pelna (void); //metoda zwracajaca czy kolejka jest pelna
+    bool czy_pusta (void); //metoda zwracajaca czy kolejka jest pusta
+    bool czy_pelna (void); //metoda zwracajaca czy kolejka jest pelna
     void dodaj_nadpisz (float); //metoda dodajaca element do kolejki z nadpisywaniem po przekroczeniu maksymalnego rozmiaru
     void dodaj_bez_nadpisu (float); //metoda dodajaca element do kolejki bez nadpisu po przekorczeniu maksymalnego rozmiaru
 
-    kolejka& operator+(kolejka&); //metoda dodajaca do siebie dwie kolejki zwracajaca nowa kolejke
+	void operator=(kolejka); //metoda zamieniajaca kolejke z lewej w kolejke z prawej strony
+    kolejka operator+(kolejka&); //metoda dodajaca do siebie dwie kolejki zwracajaca nowa kolejke
     void operator+=(kolejka&); //metoda dodajaca do jednej kolejki druga
     bool operator==(kolejka&); //metoda porownujaca czy kolejki sa takie same
     bool operator!=(kolejka&); //metoda sprawdzajaca czy kolejki sa rozne

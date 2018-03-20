@@ -1,10 +1,24 @@
-/*Marcin Hanas
- *Plik zawiera implementacje metod skladajacych sie na klase kolejki
+/* Marcin Hanas
+ * Plik zawiera implementacje metod skladajacych sie na klase kolejki
  */
 
 #include <iostream>
 #include "kolejka.h"
 
+kolejka::kolejka(int max_rozmiar) //konstruktor kolejki
+{
+    id_pierwszy=0;
+    l_el=0;
+    element= new float[max_rozmiar]; //tworzenie tablicy dynamicznej o zadanym rozmiarze kolejki
+    max_l_el=max_rozmiar;
+}
+
+kolejka::~kolejka() //destruktor
+{
+    delete[] element;
+}
+    
+    
 int kolejka::id_za_ostatnim (void)
 {
     return (id_pierwszy+l_el)%max_l_el;
@@ -46,25 +60,34 @@ int kolejka::podaj_rozmiar (void)
     return l_el;
 }
 
-int kolejka::czy_pusta (void)
+bool kolejka::czy_pusta (void)
 {
     return l_el==0;
 }
 
-int kolejka::czy_pelna (void)
+bool kolejka::czy_pelna (void)
 {
     return l_el==max_l_el;
 }
 
-kolejka& kolejka::operator+(kolejka &kol2)
+kolejka kolejka::operator+(kolejka &kol2)
 {
-    static kolejka nowa_kolejka(max_l_el+kol2.max_l_el);
+    kolejka nowa_kolejka(max_l_el+kol2.max_l_el);
      //tworzenie nowej kolejki o rozmiarze sumy maksymalnych rozmiarow obu kolejek
     for(int i=0; i<l_el; i++) nowa_kolejka.dodaj_nadpisz(element[id_i(i)]); //dodawanie do kolejki elementow z pierwszej kolejki
     for(int i=0; i<kol2.l_el; i++) nowa_kolejka.dodaj_nadpisz(kol2.element[kol2.id_i(i)]); //dodawanie do kolejki elementow z drugiej kolejki
     return nowa_kolejka;
 }
 
+void kolejka::operator=(kolejka kol2)
+{
+    delete[] element;
+    element= new float[kol2.max_l_el]; //tworzenie nowej tablicy dynamicznej o rozmiarze drugiej kolejki
+    max_l_el=kol2.max_l_el;
+    l_el=0; //zerowanie liczby elementow, utworzona tablica jest obecnie pusta
+
+    for(int i=0; i<kol2.l_el; i++) dodaj_bez_nadpisu(kol2.element[kol2.id_i(i)]); //dodawanie do kolejki elementow z drugiej kolejki
+}
 
 void kolejka::operator+=(kolejka &kol2)
 {

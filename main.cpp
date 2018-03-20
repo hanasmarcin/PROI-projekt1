@@ -1,7 +1,10 @@
+/* Marcin Hanas
+ * Plik zawiera menu
+ */
+
 #include <iostream>
 #include "kolejka.h"
 #include "kolejka.cpp"
-
 
 void menu(kolejka &x,kolejka &y)
 {
@@ -22,14 +25,34 @@ void menu(kolejka &x,kolejka &y)
 
     while(wybor!=12)
     {
-        cout << "PODAJ WYBOR: ";
+		cout << "PODAJ WYBOR: ";
         cin >> wybor;
+        while( cin.fail())
+        {
+            cout << "Bledna wartosc" << endl;
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "PODAJ WYBOR: ";
+            cin >> wybor;
+        }
+        cin.ignore(1000, '\n');
+
         switch (wybor)
         {
             case 1: {
                 float liczba;
                 cout << "Podaj nowy element (liczbe rzeczywista): ";
                 cin >> liczba;
+                while( cin.fail())
+                {
+					cout << "Bledna wartosc" << endl;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					cout << "Podaj nowy element (liczbe rzeczywista): ";
+					cin >> liczba;
+				}
+				cin.ignore(1000, '\n');
+				
                 x.dodaj_nadpisz(liczba);
                 break;
                 }
@@ -38,6 +61,16 @@ void menu(kolejka &x,kolejka &y)
                 float liczba;
                 cout << "Podaj nowy element (liczbe rzeczywista): ";
                 cin >> liczba;
+                while( cin.fail())
+                {
+					cout << "Bledna wartosc" << endl;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					cout << "Podaj nowy element (liczbe rzeczywista): ";
+					cin >> liczba;
+				}
+				cin.ignore(1000, '\n');
+				
                 y.dodaj_bez_nadpisu(liczba);
                 break;
                 }
@@ -45,6 +78,16 @@ void menu(kolejka &x,kolejka &y)
             case 3: {
                 cout << "Wybierz kolejke (x, y): ";
                 cin >> kolejka;
+                while( cin.fail())
+				{
+					cout << "Bledna wartosc" << endl;
+					cin.clear();
+					cin.ignore(1000, '\n');
+					cout << "Wybierz kolejke (x, y): ";
+					cin >> kolejka;
+				}
+				cin.ignore(1000, '\n');
+				
                 if(kolejka=='x' && !x.czy_pusta()) cout << "Pobrana liczba to: " << x.pobierz() << endl; //jezeli wybrano kolejke x i nie jest ona pusta
                 else if(kolejka=='y' && !y.czy_pusta()) cout << "Pobrana liczba to: " << y.pobierz() << endl; //jezeli wybrano y i nie jest ona pusta
                 else if(kolejka=='x' || kolejka=='y') cout << "Kolejka jest pusta." << endl;
@@ -133,6 +176,16 @@ int main()
     int rozm_x, rozm_y;
     cout << "Podaj rozmiar kolejek x i y: ";
     cin >> rozm_x >> rozm_y;
+    while( cin.fail()) //gdy nie udalo sie wczytac wartosci
+    {
+         cout << "Bledna wartosc" << endl;
+         cin.clear();
+         cin.ignore(1000, '\n');
+         cout << "Podaj rozmiar kolejek x i y: ";
+         cin >> rozm_x >> rozm_y;
+    }
+    cin.ignore(1000, '\n');
+    
     kolejka x(rozm_x); //tworzenie kolejki x o podanym rozmiarze
     kolejka y(rozm_y); //tworzenie kolejki y o podanym rozmiarze
 
